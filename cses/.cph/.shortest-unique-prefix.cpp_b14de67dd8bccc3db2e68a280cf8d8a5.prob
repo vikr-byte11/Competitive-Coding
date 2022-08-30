@@ -1,0 +1,1 @@
+{"name":"Local: shortest-unique-prefix","url":"/home/vikram/Desktop/cses/shortest-unique-prefix.cpp","tests":[{"id":1645757468370,"input":"5\nzebra\nduck\ndove\ndog\nducog","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/vikram/Desktop/cses/shortest-unique-prefix.cpp","group":"local","local":true}

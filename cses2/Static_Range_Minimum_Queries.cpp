@@ -1,0 +1,123 @@
+/**
+    You just can't beat the one who never gives up
+ 
+                            /T /I
+                              / |/ | .-~/
+                          T\ Y  I  |/  /  _
+         /T               | \I  |  I  Y.-~/
+        I l   /I       T\ |  |  l  |  T  /
+     T\ |  \ Y l  /T   | \I  l   \ `  l Y
+ __  | \l   \l  \I l __l  l   \   `  _. |
+ \ -l  `\   `\  \  \ ~\  \   `. .-   |
+  \   ~-. "-.  `  \  ^._ ^. "-.  /  \   |
+.--~-._  ~-  `  _  ~-.-"-." . /._ ." ./
+ >--.  ~-.   ._  ~>-"    "\   7   7   ]
+^._"--._    ~-{  .- .  `\ Y . /    |
+ <_ ~"-.  ~       //   \   \I  Y   : |
+   ^-._           ~(/   \   >.:   | l___
+       ^--.,_.-"  /_/   !  `-."--l_ /     ~"-.
+              (_/ .  (   /'     ""--,Y   -=b-. _)
+               (_/ .  \  :           / l      c"~o \
+                \ /    `.    .     .^   \_.-"--.  )
+                 (_/ .   `  /     /       !       )/
+                  / / _.   '.   .':      /        '
+                  ~(/ .   /    _  `  .-<
+                    /_/ . ' .-~" `.  / \  \          ,z=.
+                    ( /   '  :   | K   "-.-.__//
+                      "-,.    l   I/ \_    _{--->.(==.
+                       //(     \  <    ""     //
+                      /' /\     \  \     ,v=.  ((
+                    .^. / /\     "  }__ //===-  `
+                   / / ' '  "-.,__ {---(==-
+                 .^ '       :  T  ~"   ll       -Sparrow 
+                / .  .  . : | :!        \
+               (_/  /   | | j-"          ~^
+                                                  
+**/
+ 
+#include <bits/stdc++.h>
+using namespace std;
+#define pb push_back
+#define mp make_pair
+#define endl '\n'
+#define fo(i, a) for (int i = 0; i < a; i++)
+#define fod(i, a, b) for (int i = a; i >= b; i--)
+#define ff first
+#define ss second
+#define FAST_IO              \
+    ios::sync_with_stdio(0); \
+    cin.tie(0);              \
+    cout.tie(0);
+#define ip(v)         \
+    for (auto &x : v) \
+    cin >> x
+#define op(v)             \
+    for (auto x : v)      \
+        cout << x << " "; \
+    cout << endl
+#define tr(v) for (auto x : v)
+#define srt(v) sort(v.begin(), v.end())
+#define rev(v) reverse(v.begin(), v.end())
+#define clr(x) memset(x, 0, sizeof(x))
+ 
+typedef long long ll;
+typedef vector<ll> vi;
+typedef pair<ll, ll> pii;
+typedef vector<pii> vpii;
+typedef map<ll, ll> mii;
+ 
+const ll md = 1e9 + 7;
+// &*!=
+// ()@
+//Vikram1234@
+void fbuild(ll lo, ll hi, vi &v, vi &seg, ll tnode)
+{
+    if (lo == hi)
+    {
+        seg[tnode] = v[lo];
+        return;
+    }
+    ll mid = lo + (hi - lo) / 2;
+    fbuild(lo, mid, v, seg, 2 * tnode + 1);
+    fbuild(mid + 1, hi, v, seg, 2 * tnode + 2);
+    seg[tnode] = min(seg[2 * tnode + 1], seg[2 * tnode + 2]);
+}
+ll getsum(int nl, int nh, int node, int lreq, int rreq, vi &seg)
+{
+    //no over lap
+    if (nl > rreq || nh < lreq)
+        return INT_MAX;
+    //total over lap
+    if (nl >= lreq and nh <= rreq)
+        return seg[node];
+    ll mid = nl + (nh - nl) / 2;
+    return min(getsum(nl, mid, 2 * node + 1, lreq, rreq, seg), getsum(mid + 1, nh, 2 * node + 2, lreq, rreq, seg));
+}
+void solve()
+{
+    ll n, q;
+    cin >> n >> q;
+    vi v(n), pre(n + 1, 0);
+    ip(v);
+    vi segtree(4 * n + 2, INT_MAX);
+    fbuild(0, n - 1, v, segtree, 0);
+    while (q--)
+    {
+        ll x, y;
+        cin >> x >> y;
+        cout << getsum(0, n - 1, 0, x - 1, y - 1, segtree) << endl;
+    }
+}
+int main()
+{
+ 
+    FAST_IO
+    ll t = 1;
+    //cin>>t;
+ 
+    while (t--)
+    {
+        solve();
+    }
+    return 0;
+}
